@@ -35,6 +35,7 @@ export async function create(
   const {html_url, number} = response.data
 
   core.info(`new pull request: ${html_url}`)
+  core.setOutput("pullRequestNumber", number || 0)
 
   if (pr.labels.length > 0 || pr.assignees.length > 0) {
     core.info(
