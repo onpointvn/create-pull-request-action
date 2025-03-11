@@ -136,6 +136,7 @@ function create(octokit, pr) {
         const response = yield octokit.rest.pulls.create(Object.assign(Object.assign({}, github_1.context.repo), { title: pr.title, base: pr.base, head: pr.head, body: pr.body || '' }));
         const { html_url, number } = response.data;
         core.info(`new pull request: ${html_url}`);
+        core.setOutput('pullRequestNumber', number || 0);
         if (pr.labels.length > 0 || pr.assignees.length > 0) {
             core.info(`add labels: ${pr.labels.join(',')}, assignees: ${pr.assignees.join(',')}`);
             yield octokit.rest.issues.update(Object.assign(Object.assign({}, github_1.context.repo), { issue_number: number, labels: pr.labels, assignees: pr.assignees }));
